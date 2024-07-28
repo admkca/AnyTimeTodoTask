@@ -1,5 +1,4 @@
-# Todo App  -  Buradan Deneyin ==> [[https://todoapp-ob02ynfjo-adem-kocas-projects.vercel.app/](https://todoapp-six-bice.vercel.app/)](https://todoapp-six-bice.vercel.app/)
-
+# Todo App  -  Buradan Deneyin ==>  https://todoapp-six-bice.vercel.app/
 Bu proje, kullanıcıların görevlerini yönetmelerine olanak tanıyan bir Todo uygulamasıdır. Kullanıcılar görev ekleyebilir, güncelleyebilir, tamamlanmış görevleri görebilir ve görevleri silebilir. Ayrıca, kullanıcılar profil bilgilerini güncelleyebilir ve profil resmi olarak bir emoji seçebilirler.
 
 ## Özellikler
