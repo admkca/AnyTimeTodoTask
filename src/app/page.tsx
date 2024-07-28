@@ -4,8 +4,17 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../auth"; // Importing authentication context
 import { addTodo, getTodos, updateTodo, deleteTodo } from "../firestore"; // Importing Firestore functions
 import Head from "next/head"; // Importing Head component to set page title
-import { Button, Card, Container, Form, ListGroup } from "react-bootstrap"; // Importing React Bootstrap components
+import {
+  Button,
+  Card,
+  Container,
+  Form,
+  ListGroup,
+  Row,
+  Col,
+} from "react-bootstrap"; // Importing React Bootstrap components
 import { Timestamp } from "firebase/firestore"; // Importing Firestore timestamp
+import Link from "next/link"; // Importing Link component for navigation
 
 const Home = () => {
   const { user } = useAuth(); // Getting user from authentication context
@@ -65,14 +74,58 @@ const Home = () => {
     return "Invalid date";
   };
 
-  // If user is not authenticated, show a message
+  // If user is not authenticated, show a message with information cards
   if (!user) {
     return (
       <Container className='mt-5'>
         <Head>
           <title>Login</title>
         </Head>
-        <h2 className='text-center'>You need to log in</h2>
+        <h1 className='text-center'>Todo List </h1>
+        <Row className='mt-4'>
+          <Col md={4}>
+            <Card className='text-center customCard'>
+              <Card.Body>
+                <Card.Title>Add Todo</Card.Title>
+                <Card.Text>
+                  Add new tasks and delete your todos manage your to-do list.
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col md={4}>
+            <Card className='text-center customCard'>
+              <Card.Body>
+                <Card.Title>Completed Todos</Card.Title>
+                <Card.Text>
+                  View your completed tasks and track your achievements.
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col md={4}>
+            <Card className='text-center customCard'>
+              <Card.Body>
+                <Card.Title>Profile</Card.Title>
+                <Card.Text>
+                  Manage your personal information and update your profile. Try
+                  out great emojis.
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+
+        <div className='text-center mt-4 d-flex justify-content-center'>
+          <Link href='/login'>
+            <Button className='me-3' variant='primary'>
+              Login Now
+            </Button>
+          </Link>
+          <Link href='/register'>
+            <Button variant='danger'>Try it Now!</Button>
+          </Link>
+        </div>
       </Container>
     );
   }
@@ -114,8 +167,8 @@ const Home = () => {
       <ListGroup>
         {todos.map((todo) => (
           <Card key={todo.id} className='mb-3'>
-            <Card.Body className='d-flex justify-content-between align-items-center'>
-              <div>
+            <Card.Body className='d-flex flex-column flex-md-row justify-content-between align-items-center'>
+              <div className='mb-2 mb-md-0'>
                 <strong>{todo.content}</strong> -{" "}
                 <small>{todo.category || "General"}</small> -{" "}
                 <em>{formatDate(todo.createdAt)}</em>
@@ -124,7 +177,7 @@ const Home = () => {
                 <Button
                   variant='success'
                   size='sm'
-                  className='me-2'
+                  className='me-2 mb-2 mb-md-0'
                   onClick={() => handleComplete(todo.id)}
                 >
                   Complete

@@ -8,6 +8,7 @@ import {
   updateDoc,
   deleteDoc,
   doc,
+  orderBy,
 } from "firebase/firestore"; // Importing Firestore functions
 
 // Function to get todos from Firestore based on userId and completion status
@@ -17,7 +18,8 @@ export const getTodos = async (userId: string, completed: boolean) => {
     const q = query(
       todosRef,
       where("userId", "==", userId),
-      where("completed", "==", completed)
+      where("completed", "==", completed),
+      orderBy("createdAt", "desc") // Ordering by creation date in descending order
     ); // Query to get todos for a specific user and completion status
     const querySnapshot = await getDocs(q); // Executing the query
     const todos = querySnapshot.docs.map((doc) => {
