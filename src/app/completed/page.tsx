@@ -4,7 +4,15 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../../auth"; // Importing authentication context
 import { getTodos, updateTodo, deleteTodo } from "../../firestore"; // Importing Firestore functions
 import Head from "next/head"; // Importing Head component to set page title
-import { Button, Card, Container, Form, ListGroup } from "react-bootstrap"; // Importing React Bootstrap components
+import {
+  Button,
+  Card,
+  Container,
+  Form,
+  ListGroup,
+  Row,
+  Col,
+} from "react-bootstrap"; // Importing React Bootstrap components
 import { Timestamp } from "firebase/firestore"; // Importing Firestore timestamp
 
 const Completed = () => {
@@ -101,29 +109,66 @@ const Completed = () => {
           <ListGroup>
             {todos.map((todo) => (
               <Card key={todo.id} className='mb-3'>
-                <Card.Body className='d-flex justify-content-between align-items-center'>
-                  <div>
-                    <strong>{todo.content}</strong> -{" "}
-                    <small>{todo.category || "General"}</small> -{" "}
-                    <em>{formatDate(todo.createdAt)}</em>
-                  </div>
-                  <div>
-                    <Button
-                      variant='warning'
-                      size='sm'
-                      className='me-2'
-                      onClick={() => handleIncomplete(todo.id)}
+                <Card.Body
+                  style={{
+                    border: "1px solid #e0e0e0",
+                    borderRadius: "10px",
+                    padding: "15px",
+                  }}
+                >
+                  <Row className='d-flex justify-content-between align-items-center'>
+                    <Col xs={12} md={3}>
+                      <div>
+                        <div>
+                          <strong>Todo:</strong>
+                        </div>
+                        <div>{todo.content}</div>
+                      </div>
+                    </Col>
+                    <Col xs={12} md={2}>
+                      <div>
+                        <div>
+                          <strong>Category:</strong>
+                        </div>
+                        <div>{todo.category || "General"}</div>
+                      </div>
+                    </Col>
+                    <Col xs={12} md={3}>
+                      <div>
+                        <div>
+                          <strong>Date:</strong>
+                        </div>
+                        <div>{formatDate(todo.createdAt).split(",")[0]}</div>
+                      </div>
+                      <div>
+                        <div>
+                          <strong>Time:</strong>
+                        </div>
+                        <div>{formatDate(todo.createdAt).split(",")[1]}</div>
+                      </div>
+                    </Col>
+                    <Col
+                      xs={12}
+                      md={4}
+                      className='d-flex justify-content-md-end mt-3 mt-md-0'
                     >
-                      Undo
-                    </Button>
-                    <Button
-                      variant='danger'
-                      size='sm'
-                      onClick={() => handleDelete(todo.id)}
-                    >
-                      Delete
-                    </Button>
-                  </div>
+                      <Button
+                        variant='warning'
+                        size='sm'
+                        className='me-2'
+                        onClick={() => handleIncomplete(todo.id)}
+                      >
+                        Undo
+                      </Button>
+                      <Button
+                        variant='danger'
+                        size='sm'
+                        onClick={() => handleDelete(todo.id)}
+                      >
+                        Delete
+                      </Button>
+                    </Col>
+                  </Row>
                 </Card.Body>
               </Card>
             ))}
