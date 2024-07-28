@@ -1,36 +1,113 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Todo App  -  Buradan Deneyin ==>  https://todoapp-six-bice.vercel.app/
+Bu proje, kullanıcıların görevlerini yönetmelerine olanak tanıyan bir Todo uygulamasıdır. Kullanıcılar görev ekleyebilir, güncelleyebilir, tamamlanmış görevleri görebilir ve görevleri silebilir. Ayrıca, kullanıcılar profil bilgilerini güncelleyebilir ve profil resmi olarak bir emoji seçebilirler.
 
-## Getting Started
+## Özellikler
 
-First, run the development server:
+- **Kullanıcı Kimlik Doğrulama**: Kayıt olma, giriş yapma ve çıkış yapma.
+- **Görev Yönetimi**: Görev ekleme, güncelleme, tamamlanmış ve tamamlanmamış görevleri görüntüleme, görev silme.
+- **Profil Yönetimi**: Kullanıcı profilini güncelleme ve emoji seçimi.
+- **Kategori ve Tarih Filtreleme**: Görevleri kategoriye göre filtreleme ve tarihe göre sıralama.
+- **Responsive Tasarım**: Tüm sayfalar ve bileşenler mobil uyumlu.
+
+## Teknolojiler
+
+- **Next.js**: React tabanlı framework.
+- **Firebase**: Kimlik doğrulama ve veritabanı yönetimi.
+- **React Bootstrap**: UI bileşenleri için.
+- **TypeScript**: JavaScript'in statik tipi.
+
+## Kurulum
+
+### 1. Depoyu Klonlayın
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+bashKodu kopyala
+git clone https://github.com/kullaniciadi/todo-app.git
+cd todo-app
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Bağımlılıkları Yükleyin
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+bashKodu kopyala
+npm install
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```
 
-## Learn More
+### 3. Firebase Yapılandırması
 
-To learn more about Next.js, take a look at the following resources:
+Firebase projesini oluşturun ve yapılandırma bilgilerinizi `.env` dosyasına ekleyin. Örnek `.env` dosyası:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+envKodu kopyala
+NEXT_PUBLIC_FIREBASE_API_KEY=YOUR_API_KEY
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=YOUR_AUTH_DOMAIN
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=YOUR_PROJECT_ID
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=YOUR_STORAGE_BUCKET
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=YOUR_MESSAGING_SENDER_ID
+NEXT_PUBLIC_FIREBASE_APP_ID=YOUR_APP_ID
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```
 
-## Deploy on Vercel
+### 4. Geliştirme Sunucusunu Başlatın
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+bashKodu kopyala
+npm run dev
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```
+
+Tarayıcınızda http://localhost:3000 adresini açarak uygulamayı görüntüleyebilirsiniz.
+
+## Kullanım
+
+### Kimlik Doğrulama
+
+- **Kayıt Ol**: Yeni kullanıcılar `Kayıt Ol` sayfasından kayıt olabilir.
+- **Giriş Yap**: Kayıtlı kullanıcılar `Giriş Yap` sayfasından giriş yapabilir.
+- **Çıkış Yap**: Giriş yapmış kullanıcılar `Çıkış Yap` butonuna tıklayarak çıkış yapabilir.
+
+### Görev Yönetimi
+
+- **Görev Ekleme**: Anasayfadaki formu kullanarak yeni bir görev ekleyin.
+- **Görev Güncelleme**: Görevleri tamamlamak için `Tamamla` butonuna tıklayın.
+- **Görev Silme**: Görevleri silmek için `Sil` butonuna tıklayın.
+- **Tamamlanmamış Görevler**: Anasayfada tamamlanmamış görevleri görüntüleyin.
+- **Tamamlanmış Görevler**: `Tamamlanmış` sekmesinde tamamlanmış görevleri görüntüleyin.
+- **Kategori ve Tarih Filtreleme**: Görevleri kategoriye göre filtreleyin ve tarihe göre sıralayın.
+
+### Profil Yönetimi
+
+- **Profil Güncelleme**: Profil sayfasında kullanıcı adınızı ve e-postanızı güncelleyin.
+- **Emoji Seçimi**: Profil sayfasında profil resmi olarak bir emoji seçin.
+
+## Firestore Güvenlik Kuralları
+
+Aşağıdaki kurallar, kullanıcıların kendi verilerine erişmesini ve yönetmesini sağlar:
+
+```json
+jsonKodu kopyala
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{userId} {
+      allow create: if request.auth != null;
+      allow read, update, delete: if request.auth != null && request.auth.uid == userId;
+    }
+    match /todos/{document=**} {
+      allow read, write: if request.auth != null && request.auth.uid == resource.data.userId;
+    }
+  }
+}
+
+```
+
+## Katkıda Bulunma
+
+Katkıda bulunmak isterseniz, lütfen bir `pull request` gönderin. Tüm katkılar memnuniyetle karşılanır.
+
+## Lisans
+
+Bu proje MIT lisansı altında lisanslanmıştır. Daha fazla bilgi için `LICENSE` dosyasına bakın.
+
+
