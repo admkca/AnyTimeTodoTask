@@ -1,4 +1,4 @@
-# Todo App
+# Todo App  -  Buradan Deneyin ==> https://todoapp-ob02ynfjo-adem-kocas-projects.vercel.app/
 
 Bu proje, kullanıcıların görevlerini yönetmelerine olanak tanıyan bir Todo uygulamasıdır. Kullanıcılar görev ekleyebilir, güncelleyebilir, tamamlanmış görevleri görebilir ve görevleri silebilir. Ayrıca, kullanıcılar profil bilgilerini güncelleyebilir ve profil resmi olarak bir emoji seçebilirler.
 
@@ -111,15 +111,4 @@ Katkıda bulunmak isterseniz, lütfen bir `pull request` gönderin. Tüm katkıl
 
 Bu proje MIT lisansı altında lisanslanmıştır. Daha fazla bilgi için `LICENSE` dosyasına bakın.
 
-# Profile/page.tsx
 
-### Açıklamalar
-
-- **useEffect**: Kullanıcı yüklendiğinde profil verilerini çekmek için kullanılıyor.
-- **fetchProfile**: Firestore'dan kullanıcı profil verilerini çekiyor ve state'leri güncelliyor.
-- **handleUpdate**: Profil verilerini günceller ve Firestore'a kaydeder.
-- **handleLogout**: Kullanıcıyı çıkış yapar ve login sayfasına yönlendirir.
-- **handleEmojiSelect**: Emoji seçildiğinde state'i günceller ve emoji picker'ı kapatır.
-- **handleNameChange & handleEmailChange**: İsim ve email alanlarının değişikliklerini yönetir.
-- **Kullanıcı Girişi Kontrolü**: Kullanıcı giriş yapmamışsa giriş yapmasını ister.
-- **Profil Kartı**: İsim, email ve emoji seçme alanları bir kart bileşeni içinde gösterilir.
