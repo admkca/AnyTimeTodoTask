@@ -137,8 +137,15 @@ const Home = () => {
         <title>Todo App</title>
       </Head>
       <h2 className='text-center mb-4'>Add Todo</h2>
-      <Card className='mx-auto mb-4' style={{ maxWidth: "500px" }}>
-        <Card.Body>
+      <Card
+        className='mx-auto mb-4'
+        style={{
+          maxWidth: "700px",
+          borderRadius: "10px",
+          border: "1px solid #e0e0e0",
+        }}
+      >
+        <Card.Body style={{ padding: "30px" }}>
           <Form onSubmit={handleAddTodo}>
             <Form.Group controlId='content'>
               <Form.Label>Content</Form.Label>
@@ -147,6 +154,11 @@ const Home = () => {
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
                 required
+                style={{
+                  borderRadius: "5px",
+                  border: "1px solid #ccc",
+                  padding: "10px",
+                }}
               />
             </Form.Group>
             <Form.Group controlId='category' className='mt-3'>
@@ -155,9 +167,19 @@ const Home = () => {
                 type='text'
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
+                style={{
+                  borderRadius: "5px",
+                  border: "1px solid #ccc",
+                  padding: "10px",
+                }}
               />
             </Form.Group>
-            <Button variant='primary' type='submit' className='mt-3 w-100'>
+            <Button
+              variant='primary'
+              type='submit'
+              className='mt-3 w-100'
+              style={{ borderRadius: "5px" }}
+            >
               Add
             </Button>
           </Form>
@@ -166,30 +188,67 @@ const Home = () => {
       <h2 className='text-center mb-4'>Incomplete Todos</h2>
       <ListGroup>
         {todos.map((todo) => (
-          <Card key={todo.id} className='mb-3'>
-            <Card.Body className='d-flex flex-column flex-md-row justify-content-between align-items-center'>
-              <div className='mb-2 mb-md-0'>
-                <strong>{todo.content}</strong> -{" "}
-                <small>{todo.category || "General"}</small> -{" "}
-                <em>{formatDate(todo.createdAt)}</em>
-              </div>
-              <div>
-                <Button
-                  variant='success'
-                  size='sm'
-                  className='me-2 mb-2 mb-md-0'
-                  onClick={() => handleComplete(todo.id)}
+          <Card key={todo.id} className='mb-3' style={{ borderRadius: "10px" }}>
+            <Card.Body
+              style={{
+                border: "1px solid #e0e0e0",
+                borderRadius: "10px",
+                padding: "15px",
+              }}
+            >
+              <Row className='d-flex justify-content-between align-items-center'>
+                <Col xs={12} md={3}>
+                  <div>
+                    <div>
+                      <strong>Todo:</strong>
+                    </div>
+                    <div>{todo.content}</div>
+                  </div>
+                </Col>
+                <Col xs={12} md={2}>
+                  <div>
+                    <div>
+                      <strong>Category:</strong>
+                    </div>
+                    <div>{todo.category || "General"}</div>
+                  </div>
+                </Col>
+                <Col xs={12} md={3}>
+                  <div>
+                    <div>
+                      <strong>Date:</strong>
+                    </div>
+                    <div>{formatDate(todo.createdAt).split(",")[0]}</div>
+                  </div>
+                  <div>
+                    <div>
+                      <strong>Time:</strong>
+                    </div>
+                    <div>{formatDate(todo.createdAt).split(",")[1]}</div>
+                  </div>
+                </Col>
+                <Col
+                  xs={12}
+                  md={4}
+                  className='d-flex justify-content-md-end mt-3 mt-md-0'
                 >
-                  Complete
-                </Button>
-                <Button
-                  variant='danger'
-                  size='sm'
-                  onClick={() => handleDelete(todo.id)}
-                >
-                  Delete
-                </Button>
-              </div>
+                  <Button
+                    variant='success'
+                    size='sm'
+                    className='me-2'
+                    onClick={() => handleComplete(todo.id)}
+                  >
+                    Complete
+                  </Button>
+                  <Button
+                    variant='danger'
+                    size='sm'
+                    onClick={() => handleDelete(todo.id)}
+                  >
+                    Delete
+                  </Button>
+                </Col>
+              </Row>
             </Card.Body>
           </Card>
         ))}
